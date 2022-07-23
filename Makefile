@@ -4,7 +4,7 @@ DOCKER_TAG ?= latest
 DOCKER_CONTAINER ?= edge-example
 DOCKER_CONTAINER_NAME ?= edge-example
 DOCKER_CONTAINER_PORT ?= 8080
-DOCKER_FILE_DEV ?= Dockerfile_dev
+DOCKER_FILE_DEV ?= Dockerfile
 
 # Build the docker image for development
 docker-dev-build:
