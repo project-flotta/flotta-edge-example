@@ -1,0 +1,13 @@
+version: "3.5"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./${DOCKERFILE}
+    env_file: .env
+    container_name: ${APP_CONTAINER_NAME}
+    command: sh -c "chmod +x /app/start.sh && /app/start.sh"
+    ports:
+      - ${APP_PORT}:8080
+    volumes:
+      - ./app:/app

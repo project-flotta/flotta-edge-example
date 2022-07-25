@@ -1,0 +1,47 @@
+apiVersion: management.project-flotta.io/v1alpha1
+kind: EdgeWorkload
+metadata:
+  name: random-server
+spec:
+  deviceSelector:
+    matchLabels:
+      app: fedora36 # kubectl label edgedevice ae380196e7c149ae95a608ee6f528288 app=fedora36
+  type: pod
+  pod:
+    spec:
+      containers:
+        - name: random-server
+          image: docker.io/eloycoto/logexample
+---
+#apiVersion: management.project-flotta.io/v1alpha1
+#kind: EdgeWorkload
+#metadata:
+#  name: random-workload # from https://project-flotta.io/flotta/2022/04/10/using-log-collection.html
+#spec:
+#  logCollection: dc1-syslog
+#  deviceSelector:
+#    matchLabels:
+#      app: edge-device-app # my changes
+#  type: pod
+#  pod:
+#    spec:
+#      containers:
+#        - name: random-server
+#          image: docker.io/eloycoto/logexample
+#---
+#apiVersion: management.project-flotta.io/v1alpha1
+#kind: EdgeWorkload
+#metadata:
+#  name: payment-workload # from https://project-flotta.io/flotta/2022/04/10/using-log-collection.html
+#spec:
+#  logCollection: secure-syslog
+#  deviceSelector:
+#    matchLabels:
+#      app: edge-device-app # my changes
+#  type: pod
+#  pod:
+#    spec:
+#      containers:
+#        - name: payment-server
+#          image: docker.io/eloycoto/payments:v1
+#---

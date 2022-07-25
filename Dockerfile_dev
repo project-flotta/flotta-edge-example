@@ -1,17 +1,17 @@
-FROM golang:1.18-alpine AS builder
+FROM golang:1.18-alpine
+
+# HINT:: this Dockerfile only for development
 
 # this file for the development only
 RUN mkdir /app
-COPY . /app
+COPY ./app /app
 WORKDIR /app
 
-RUN go get github.com/githubnemo/CompileDaemon
+RUN chmod +x /app/start.sh
 
-FROM alpine:latest AS runner
+RUN go install github.com/cosmtrek/air@latest
 
-WORKDIR /app
-COPY --from=builder /app .
-RUN chmod +x entrypoint.sh
+# In this case air command for hot reload go apps on file changes
+ENTRYPOINT air
 
 EXPOSE 8080
-ENTRYPOINT ["entrypoint.sh"]

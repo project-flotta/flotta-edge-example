@@ -23,6 +23,6 @@ func TracerouteCmd(server string) {
 
 	// Print the output
 	//fmt.Println(string(stdout))
-	f, err := os.Create(fmt.Sprintf("./%s.txt", server))
+	f, err := os.Create(fmt.Sprintf("./tmp/%s.txt", server))
 	fmt.Fprintf(f, "======= server: %s \n %v\n", server, string(stdout))
 }
