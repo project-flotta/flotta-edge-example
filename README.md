@@ -17,7 +17,7 @@ run the following commands to get started:
 ```
 cp .env.example .env
 ```
-- change the Dockerfile var value in .env to `dockerfile_dev`
+- change the `DOCKERFILE` var value in .env to `Dockerfile_dev`
 ```
 docker-compose up
 ```

@@ -1,9 +1,8 @@
 package network
 
 import (
-	"fmt"
-	"os"
-	"os/exec"
+	tracerouteCmd "github.com/ahmadateya/traceroute/cmd"
+	"github.com/ahmadateya/traceroute/traceroute"
 )
 
 func main() {
@@ -11,18 +10,6 @@ func main() {
 }
 
 func TracerouteCmd(server string) {
-
-	cmd := exec.Command("traceroute", server)
-
-	stdout, err := cmd.Output()
-
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-
-	// Print the output
-	//fmt.Println(string(stdout))
-	f, err := os.Create(fmt.Sprintf("./tmp/%s.txt", server))
-	fmt.Fprintf(f, "======= server: %s \n %v\n", server, string(stdout))
+	options := traceroute.TracerouteOptions{}
+	tracerouteCmd.GoTraceroute(server, options, "./tmp")
 }

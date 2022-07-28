@@ -9,6 +9,7 @@ WORKDIR /app
 
 RUN chmod +x /app/start.sh
 
+RUN apk add vim bash
 RUN go install github.com/cosmtrek/air@latest
 
 # In this case air command for hot reload go apps on file changes
