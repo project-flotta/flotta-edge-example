@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/ahmadateya/flotta-edge-example/helpers"
-	"net"
 	"os"
 )
 
@@ -22,12 +21,12 @@ func printHop(hop Hop) {
 }
 
 func GoTraceroute(host string, options Options, pathToSave string) {
-	ipAddr, err := net.ResolveIPAddr("ip", host)
-	if err != nil {
-		return
-	}
+	//ipAddr, err := net.ResolveIPAddr("ip", host)
+	//if err != nil {
+	//	return
+	//}
 
-	fmt.Printf("traceroute to %v (%v), %v hops max, %v byte packets\n", host, ipAddr, options.MaxHops(), options.PacketSize())
+	//fmt.Printf("traceroute to %v (%v), %v hops max, %v byte packets\n", host, ipAddr, options.MaxHops(), options.PacketSize())
 
 	c := make(chan Hop, 0)
 	go func() {
