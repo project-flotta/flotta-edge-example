@@ -3,7 +3,7 @@ package traceroute
 import (
 	"encoding/json"
 	"fmt"
-	"net"
+	"log"
 	"os"
 )
 
@@ -21,38 +21,37 @@ func printHop(hop Hop) {
 }
 
 func GoTraceroute(host string, options Options, pathToSave string) {
-	ipAddr, err := net.ResolveIPAddr("ip", host)
-	if err != nil {
-		return
-	}
+	//ipAddr, err := net.ResolveIPAddr("ip", host)
+	//if err != nil {
+	//	return
+	//}
 
-	fmt.Printf("traceroute to %v (%v), %v hops max, %v byte packets\n", host, ipAddr, options.MaxHops(), options.PacketSize())
+	//fmt.Printf("traceroute to %v (%v), %v hops max, %v byte packets\n", host, ipAddr, options.MaxHops(), options.PacketSize())
 
 	c := make(chan Hop, 0)
 	go func() {
 		for {
-			hop, ok := <-c
+			_, ok := <-c
 			if !ok {
 				fmt.Println()
 				return
 			}
-			printHop(hop)
+			//printHop(hop)
 		}
 	}()
 
 	result, err := traceroute(host, &options, c)
 	if err != nil {
-		fmt.Printf("Error: ", err)
+		fmt.Printf("Error: %v", err)
 	}
 
 	if pathToSave != "" {
-		f, _ := os.OpenFile(fmt.Sprintf("%s/%s.json", pathToSave, host), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+		f, _ := os.OpenFile(fmt.Sprintf("%s/traceroute-to-%s.log", pathToSave, host), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 		defer f.Close()
 
 		b, _ := json.Marshal(result)
 
-		if _, err = f.WriteString("\n" + string(b)); err != nil {
-			panic(fmt.Sprintf("cant write to log file %v ", err))
-		}
+		log.SetOutput(f)
+		log.Println(string(b))
 	}
 }

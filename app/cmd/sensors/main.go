@@ -1,18 +1,13 @@
 package sensors
 
 import (
-	"fmt"
+	"github.com/ahmadateya/flotta-edge-example/pkg/cputemp"
 	"time"
 )
 
-func main() {
-	//generateDummyLogs()
-}
-
-// GenerateDummyLogs dummy logs generator, generate log every one second
-func GenerateDummyLogs() {
+func Start(intervalInMin int) {
 	for {
-		fmt.Println("New message at: ", time.Now().Format(time.UnixDate))
-		time.Sleep(time.Second)
+		cputemp.ReadCPUTemp("./tmp")
+		time.Sleep(time.Duration(intervalInMin) * time.Minute)
 	}
 }
