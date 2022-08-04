@@ -3,7 +3,7 @@ package traceroute
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ahmadateya/flotta-edge-example/helpers"
+	"log"
 	"os"
 )
 
@@ -46,13 +46,12 @@ func GoTraceroute(host string, options Options, pathToSave string) {
 	}
 
 	if pathToSave != "" {
-		f, _ := os.OpenFile(fmt.Sprintf("%s/%s.json", pathToSave, host), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+		f, _ := os.OpenFile(fmt.Sprintf("%s/traceroute-to-%s.log", pathToSave, host), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 		defer f.Close()
 
 		b, _ := json.Marshal(result)
 
-		if _, err = f.WriteString(helpers.FormatLog(string(b))); err != nil {
-			panic(fmt.Sprintf("cant write to log file %v ", err))
-		}
+		log.SetOutput(f)
+		log.Println(string(b))
 	}
 }
