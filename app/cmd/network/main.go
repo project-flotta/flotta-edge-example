@@ -1,15 +1,14 @@
 package network
 
 import (
-	tracerouteCmd "github.com/ahmadateya/traceroute/cmd"
-	"github.com/ahmadateya/traceroute/traceroute"
+	"github.com/ahmadateya/flotta-edge-example/pkg/traceroute"
+	"time"
 )
 
-func main() {
-	//generateDummyLogs()
-}
-
-func TracerouteCmd(server string) {
-	options := traceroute.TracerouteOptions{}
-	tracerouteCmd.GoTraceroute(server, options, "./tmp")
+func Start(server string, intervalInMin int) {
+	options := traceroute.Options{}
+	for {
+		traceroute.GoTraceroute(server, options, "./tmp")
+		time.Sleep(time.Duration(intervalInMin) * time.Minute)
+	}
 }
