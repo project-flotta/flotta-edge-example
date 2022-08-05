@@ -2,7 +2,6 @@ FROM golang:1.18-alpine
 
 # HINT:: this Dockerfile only for development
 
-# this file for the development only
 RUN mkdir /app
 COPY ./app /app
 WORKDIR /app
@@ -14,5 +13,3 @@ RUN go install github.com/cosmtrek/air@latest
 
 # In this case air command for hot reload go apps on file changes
 ENTRYPOINT air
-
-EXPOSE 8080
