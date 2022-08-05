@@ -5,19 +5,26 @@ you need to have:
 - Docker installed
 - Docker-compose installed
 
-## Getting Started
-to see the app up and running, run:
+## Stats
+as this app will be running in edge device resource consumption will be important.
+the following stats came from `docker stats` command:
 ```
-make app-up
+docker stats --no-stream --format \
+    "{\"container\":\"{{ .Container }}\",\"memory\":{\"raw\":\"{{ .MemUsage }}\",\"percent\":\"{{ .MemPerc }}\"},\"cpu\":\"{{ .CPUPerc }}\"}" | jq
 ```
-browse the app at: http://localhost:3000
+```json
+{
+  "container": "957ccb2068d0",
+  "memory": {
+    "raw": "4.441MiB / 7.553GiB",
+    "percent": "0.06%"
+  },
+  "cpu": "0.00%"
+}
+```
 
 ## For Developers
 run the following commands to get started:
 ```
-cp .env.example .env
-```
-- change the `DOCKERFILE` var value in .env to `Dockerfile_dev`
-```
-docker-compose up
+make run
 ```
