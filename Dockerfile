@@ -10,6 +10,7 @@ RUN go build -o app ./
 
 FROM alpine:latest AS runner
 
+RUN apk add vim bash
 WORKDIR /app
 COPY --from=builder /app .
 RUN chmod +x app
