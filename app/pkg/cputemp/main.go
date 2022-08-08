@@ -16,6 +16,11 @@ type CPUTemp struct {
 }
 
 func ReadCPUTemp(pathToSave string) {
+	cpuTemp := getCPUTemp()
+	saveCPUTemp(pathToSave, cpuTemp)
+}
+
+func getCPUTemp() CPUTemp {
 	raw, err := os.ReadFile(ThermalZoneFile)
 	if err != nil {
 		fmt.Printf("Failed to read temperature from %q: %v", ThermalZoneFile, err)
@@ -27,10 +32,12 @@ func ReadCPUTemp(pathToSave string) {
 		fmt.Printf("%q does not contain an integer: %v", ThermalZoneFile, err)
 	}
 
-	cpuTemp := CPUTemp{
+	return CPUTemp{
 		Temp: float64(cpuTempInt) / 1000.0,
 	}
+}
 
+func saveCPUTemp(pathToSave string, cpuTemp CPUTemp) {
 	f, _ := os.OpenFile(fmt.Sprintf("%s/cputemp.log", pathToSave), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 	defer f.Close()
 
