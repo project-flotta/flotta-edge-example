@@ -3,12 +3,12 @@ package cputemp
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 	"testing"
 )
 
 func TestSaveCPUTempFunc(t *testing.T) {
-	fmt.Println("Testing saveCPUTemp Func...")
 	tmp := CPUTemp{Temp: 55.5}
 	saveCPUTemp("/tmp", tmp)
 	//check if the file exists
@@ -27,19 +27,12 @@ func TestSaveCPUTempFunc(t *testing.T) {
 	}
 }
 
-func TestReadCPUTemp(t *testing.T) {
-	fmt.Println("Testing Read CPU Temp")
-	//out, err := traceroute("google.com", new(Options))
-	//if err == nil {
-	//	if len(out.Hops) == 0 {
-	//		t.Errorf("TestTraceroute failed. Expected at least one hop")
-	//	}
-	//} else {
-	//	t.Errorf("TestTraceroute failed due to an error: %v", err)
-	//}
-	//
-	//for _, hop := range out.Hops {
-	//	printHop(hop)
-	//}
-	//fmt.Println()
+func TestGetCPUTemp(t *testing.T) {
+	raw, _ := os.ReadFile(ThermalZoneFile)
+	temp := getCPUTemp()
+	cpuTempInt, _ := strconv.Atoi(strings.TrimSpace(string(raw))) // e.g. 55306
+
+	if temp.Temp != float64(cpuTempInt)/1000.0 {
+		t.Errorf("%v does not equal to %v testing data", temp.Temp, cpuTempInt)
+	}
 }

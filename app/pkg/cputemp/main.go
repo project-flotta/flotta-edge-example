@@ -25,9 +25,7 @@ func getCPUTemp() CPUTemp {
 	if err != nil {
 		fmt.Printf("Failed to read temperature from %q: %v", ThermalZoneFile, err)
 	}
-
-	cpuTempStr := strings.TrimSpace(string(raw))
-	cpuTempInt, err := strconv.Atoi(cpuTempStr) // e.g. 55306
+	cpuTempInt, err := strconv.Atoi(strings.TrimSpace(string(raw))) // e.g. 55306
 	if err != nil {
 		fmt.Printf("%q does not contain an integer: %v", ThermalZoneFile, err)
 	}
