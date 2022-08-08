@@ -8,3 +8,6 @@ build-prod-image:
 # make production build and push to docker hub
 push-prod-image: build-prod-image
 	docker push ahmadateya/flotta-edge-example-workload:latest
+
+test:
+	cd app/ && sudo go test -v ./...

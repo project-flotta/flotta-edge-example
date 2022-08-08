@@ -3,6 +3,7 @@ package traceroute
 
 import (
 	"errors"
+	"fmt"
 	"net"
 	"syscall"
 	"time"
@@ -91,6 +92,7 @@ func traceroute(dest string, options *Options, c ...chan Hop) (result Result, er
 		// Set up the socket to receive inbound packets
 		recvSocket, err := syscall.Socket(syscall.AF_INET, syscall.SOCK_RAW, syscall.IPPROTO_ICMP)
 		if err != nil {
+			fmt.Println("======================== Error creating socket: ", err)
 			return result, err
 		}
 

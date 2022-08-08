@@ -6,7 +6,6 @@ import (
 )
 
 func TestTraceroute(t *testing.T) {
-	fmt.Println("Testing synchronous traceroute")
 	out, err := traceroute("google.com", new(Options))
 	if err == nil {
 		if len(out.Hops) == 0 {
@@ -23,7 +22,6 @@ func TestTraceroute(t *testing.T) {
 }
 
 func TestTracerouteChannel(t *testing.T) {
-	fmt.Println("Testing asynchronous traceroute")
 	c := make(chan Hop, 0)
 	go func() {
 		for {
