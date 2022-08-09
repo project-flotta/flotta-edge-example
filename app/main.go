@@ -4,6 +4,7 @@ import (
 	networkPkg "github.com/ahmadateya/flotta-edge-example/cmd/network"
 	sensorsPkg "github.com/ahmadateya/flotta-edge-example/cmd/sensors"
 	"sync"
+	"time"
 )
 
 const Destination = "google.com"
@@ -13,7 +14,7 @@ func main() {
 	wg.Add(2)
 	go func() {
 		defer wg.Done()
-		networkPkg.Start(Destination, 1)
+		networkPkg.Start(Destination, time.Minute)
 	}()
 
 	go func() {

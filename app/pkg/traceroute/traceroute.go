@@ -1,9 +1,7 @@
-// Package traceroute provides functions for executing a traceroute to a remote host.
 package traceroute
 
 import (
 	"errors"
-	"fmt"
 	"net"
 	"syscall"
 	"time"
@@ -16,8 +14,7 @@ const DefaultTimeoutMs = 500
 const DefaultRetries = 3
 const DefaultPacketSize = 52
 
-// Return the first non-loopback address as a 4 byte IP address. This address
-// is used for sending packets out.
+// Return the first non-loopback address as a 4 byte IP address. This address is used for sending packets out.
 func socketAddr() (addr [4]byte, err error) {
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
@@ -64,13 +61,9 @@ func closeNotify(channels []chan Hop) {
 	}
 }
 
-// Traceroute uses the given dest (hostname) and options to execute a traceroute
-// from your machine to the remote host.
-//
+// Traceroute uses the given dest (hostname) and options to execute a traceroute from your machine to the remote host.
 // Outbound packets are UDP packets and inbound packets are ICMP.
-//
-// Returns a TracerouteResult which contains an array of hops. Each hop includes
-// the elapsed time and its IP address.
+// Returns a Result which contains an array of hops. Each hop includesthe elapsed time and its IP address.
 func traceroute(dest string, options *Options, c ...chan Hop) (result Result, err error) {
 	result.Hops = []Hop{}
 	destAddr, err := destAddr(dest)
@@ -86,13 +79,11 @@ func traceroute(dest string, options *Options, c ...chan Hop) (result Result, er
 	ttl := options.FirstHop()
 	retry := 0
 	for {
-		//log.Println("TTL: ", ttl)
 		start := time.Now()
 
 		// Set up the socket to receive inbound packets
 		recvSocket, err := syscall.Socket(syscall.AF_INET, syscall.SOCK_RAW, syscall.IPPROTO_ICMP)
 		if err != nil {
-			fmt.Println("======================== Error creating socket: ", err)
 			return result, err
 		}
 
@@ -123,8 +114,7 @@ func traceroute(dest string, options *Options, c ...chan Hop) (result Result, er
 
 			hop := Hop{Success: true, Address: currAddr, N: n, ElapsedTime: elapsed, TTL: ttl}
 
-			// TODO: this reverse lookup appears to have some standard timeout that is relatively
-			// high. Consider switching to something where there is greater control.
+			// TODO: this reverse lookup appears to have some standard timeout that is relatively high. Consider switching to something where there is greater control.
 			currHost, err := net.LookupAddr(hop.AddressString())
 			if err == nil {
 				hop.Host = currHost[0]

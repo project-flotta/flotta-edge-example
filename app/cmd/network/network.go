@@ -5,10 +5,10 @@ import (
 	"time"
 )
 
-func Start(server string, intervalInMin int) {
+func Start(server string, d time.Duration) {
 	options := traceroute.Options{}
 	for {
 		traceroute.GoTraceroute(server, options, "./tmp")
-		time.Sleep(time.Duration(intervalInMin) * time.Minute)
+		time.Sleep(d)
 	}
 }
