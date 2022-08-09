@@ -36,10 +36,16 @@ func getCPUTemp() CPUTemp {
 }
 
 func saveCPUTemp(pathToSave string, cpuTemp CPUTemp) {
-	f, _ := os.OpenFile(fmt.Sprintf("%s/cputemp.log", pathToSave), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+	f, err := os.OpenFile(fmt.Sprintf("%s/cputemp.log", pathToSave), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+	if err != nil {
+		fmt.Printf("Could not open file %q: %v", fmt.Sprintf("%s/cputemp.log", pathToSave), err)
+	}
 	defer f.Close()
 
 	log.SetOutput(f)
-	b, _ := json.Marshal(cpuTemp)
+	b, err := json.Marshal(cpuTemp)
+	if err != nil {
+		fmt.Printf("Error marshaling cpuTemp: %v", err)
+	}
 	log.Println(string(b))
 }

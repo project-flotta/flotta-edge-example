@@ -28,7 +28,7 @@ func main() {
 
 	go func() {
 		defer wg.Done()
-		sensorsPkg.Start(1)
+		sensorsPkg.Start(time.Minute, LogsDir)
 	}()
 	wg.Wait()
 }
