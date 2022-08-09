@@ -9,13 +9,14 @@ import (
 )
 
 var Destination = os.Getenv("CLUSTER_ADDRESS")
+var LogsDir = os.Getenv("LOGS_DIR")
 
 func main() {
 	var wg sync.WaitGroup
 	wg.Add(2)
 	go func() {
 		defer wg.Done()
-		networkPkg.Start(Destination, time.Minute)
+		networkPkg.Start(Destination, time.Minute, LogsDir)
 	}()
 
 	go func() {

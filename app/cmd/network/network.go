@@ -2,16 +2,19 @@ package network
 
 import (
 	"github.com/ahmadateya/flotta-edge-example/pkg/traceroute"
-	"os"
 	"time"
 )
 
-var LogsDir = os.Getenv("LOGS_DIR")
-
-func Start(server string, sleep time.Duration) {
+func Start(server string, sleep time.Duration, pathToSave string) {
+	if pathToSave == "" {
+		pathToSave = "./tmp"
+	}
+	if server == "" {
+		server = "google.com"
+	}
 	options := traceroute.Options{}
 	for {
-		traceroute.GoTraceroute(server, options, LogsDir)
+		traceroute.GoTraceroute(server, options, pathToSave)
 		time.Sleep(sleep)
 	}
 }
