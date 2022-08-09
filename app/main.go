@@ -3,11 +3,12 @@ package main
 import (
 	networkPkg "github.com/ahmadateya/flotta-edge-example/cmd/network"
 	sensorsPkg "github.com/ahmadateya/flotta-edge-example/cmd/sensors"
+	"os"
 	"sync"
 	"time"
 )
 
-const Destination = "google.com"
+var Destination = os.Getenv("CLUSTER_ADDRESS")
 
 func main() {
 	var wg sync.WaitGroup
