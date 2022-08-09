@@ -8,10 +8,10 @@ import (
 
 var LogsDir = os.Getenv("LOGS_DIR")
 
-func Start(server string, d time.Duration) {
+func Start(server string, sleep time.Duration) {
 	options := traceroute.Options{}
 	for {
 		traceroute.GoTraceroute(server, options, LogsDir)
-		time.Sleep(d)
+		time.Sleep(sleep)
 	}
 }
