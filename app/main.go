@@ -12,6 +12,13 @@ var Destination = os.Getenv("CLUSTER_ADDRESS")
 var LogsDir = os.Getenv("LOGS_DIR")
 
 func main() {
+	if LogsDir == "" {
+		LogsDir = "./tmp"
+	}
+	if Destination == "" {
+		Destination = "google.com"
+	}
+
 	var wg sync.WaitGroup
 	wg.Add(2)
 	go func() {
