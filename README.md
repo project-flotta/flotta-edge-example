@@ -28,3 +28,11 @@ run the following commands to get started:
 ```
 make run
 ```
+
+to make a production build run:
+```
+make build-prod-image
+```
+```
+make push-prod-image
+```
