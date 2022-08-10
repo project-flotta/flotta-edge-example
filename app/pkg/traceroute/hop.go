@@ -5,7 +5,6 @@ import (
 	"time"
 )
 
-// Hop TracerouteHop type
 type Hop struct {
 	Success     bool
 	Address     [4]byte

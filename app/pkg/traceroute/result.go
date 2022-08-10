@@ -1,6 +1,6 @@
 package traceroute
 
-// Result TracerouteResult type
+// Result is the traceroute result
 type Result struct {
 	DestinationAddress [4]byte
 	Hops               []Hop
