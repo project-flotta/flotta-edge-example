@@ -17,7 +17,10 @@ type CPUTemp struct {
 
 func ReadCPUTemp(pathToSave string) {
 	cpuTemp := getCPUTemp()
-	saveCPUTemp(pathToSave, cpuTemp)
+	err := saveCPUTemp(pathToSave, cpuTemp)
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 func getCPUTemp() CPUTemp {
@@ -35,17 +38,18 @@ func getCPUTemp() CPUTemp {
 	}
 }
 
-func saveCPUTemp(pathToSave string, cpuTemp CPUTemp) {
+func saveCPUTemp(pathToSave string, cpuTemp CPUTemp) error {
 	f, err := os.OpenFile(fmt.Sprintf("%s/cputemp.log", pathToSave), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
-		fmt.Printf("Could not open file %q: %v", fmt.Sprintf("%s/cputemp.log", pathToSave), err)
+		return fmt.Errorf("could not open file %q: %v", fmt.Sprintf("%s/cputemp.log", pathToSave), err)
 	}
 	defer f.Close()
 
 	log.SetOutput(f)
 	b, err := json.Marshal(cpuTemp)
 	if err != nil {
-		fmt.Printf("Error marshaling cpuTemp: %v", err)
+		return fmt.Errorf("Error marshaling cpuTemp: %v", err)
 	}
 	log.Println(string(b))
+	return nil
 }

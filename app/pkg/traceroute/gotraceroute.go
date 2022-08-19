@@ -35,14 +35,25 @@ func GoTraceroute(host string, options Options, pathToSave string) {
 
 	result, err := traceroute(host, &options, c)
 	if err != nil {
-		fmt.Printf("Error: %v", err)
+		log.Printf("Error: %v", err)
 	}
 
 	if pathToSave != "" {
-		f, _ := os.OpenFile(fmt.Sprintf("%s/traceroute-to-%s.log", pathToSave, host), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
-		defer f.Close()
+		f, err := os.OpenFile(fmt.Sprintf("%s/traceroute-to-%s.log", pathToSave, host), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+		if err != nil {
+			log.Printf("could not open file %q: %v\n", fmt.Sprintf("%s/traceroute-to-%s.log", pathToSave, host), err)
+		}
+		defer func(f *os.File) {
+			err := f.Close()
+			if err != nil {
+				log.Printf("could not close file %q: %v\n", f.Name(), err)
+			}
+		}(f)
 
-		b, _ := json.Marshal(result)
+		b, err := json.Marshal(result)
+		if err != nil {
+			log.Printf("Error marshaling result: %v", err)
+		}
 
 		log.SetOutput(f)
 		log.Println(string(b))
