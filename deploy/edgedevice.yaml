@@ -1,0 +1,24 @@
+apiVersion: management.project-flotta.io/v1alpha1
+kind: EdgeDevice
+metadata:
+  name: example-edge-device
+  namespace: default
+  labels:
+    app: edge-device-app
+spec:
+  requestTime: "2022-07-14T04:55:44Z"
+  logCollection:
+    dc1-syslog:
+      bufferSize: 10 # 10 megabytes of size
+      kind: syslog
+      syslogConfig:
+        name: dc1-syslog
+    secure-syslog:
+      bufferSize: 100 # 100 megabytes of size
+      kind: syslog
+      syslogConfig:
+        name: secure-syslog
+  storage:
+    s3:
+      configMapName: "s3config"
+      secretName: "s3secret"
