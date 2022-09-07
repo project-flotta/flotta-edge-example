@@ -7,6 +7,10 @@ spec:
   deviceSelector:
     matchLabels:
       app: edge-device-app
+  data:
+    egress:
+      - source: export
+        target: example-edge-device
   type: pod
   pod:
     spec:

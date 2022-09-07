@@ -1,7 +1,7 @@
 apiVersion: management.project-flotta.io/v1alpha1
 kind: EdgeDevice
 metadata:
-  name: example-edge-device
+  name: edge-example-device
   namespace: default
   labels:
     app: edge-device-app

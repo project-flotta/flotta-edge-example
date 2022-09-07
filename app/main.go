@@ -9,11 +9,12 @@ import (
 )
 
 var Destination = os.Getenv("CLUSTER_ADDRESS")
-var LogsDir = os.Getenv("LOGS_DIR")
+var LogsDir = os.Getenv("DEVICE_NAME")
 
 func main() {
+	// TODO make sure that /export/deviceName is created with the proper permissions
 	if LogsDir == "" {
-		LogsDir = "./tmp"
+		LogsDir = "./export/device"
 	}
 	if Destination == "" {
 		Destination = "google.com"
