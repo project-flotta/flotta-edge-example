@@ -36,3 +36,7 @@ make build-prod-image
 ```
 make push-prod-image
 ```
+
+## Future Works
+- Add more sensors to the app, like CPU usage, memory usage, etc.
+- Upload the data to Prometheus or Thanos as it provides more features for data visualization and analysis.
