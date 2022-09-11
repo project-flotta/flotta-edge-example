@@ -1,0 +1,22 @@
+apiVersion: management.project-flotta.io/v1alpha1
+kind: EdgeWorkload
+metadata:
+  name: edge-example-workload
+spec:
+  logCollection: dc1-syslog
+  deviceSelector:
+    matchLabels:
+      app: edge-device-app
+  data:
+    egress:
+      - source: export
+        target: example-edge-device
+  type: pod
+  pod:
+    spec:
+      containers:
+        - name: edge-example-workload
+          image: docker.io/ahmadateya/flotta-edge-example-workload:latest
+          securityContext:
+            capabilities:
+              add: ["ALL"]

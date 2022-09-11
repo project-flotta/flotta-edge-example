@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dc1-syslog
+  namespace: default
+data:
+  Address: dc1.syslog.project-flotta.io:601
+  Protocol: tcp
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: secure-syslog
+  namespace: default
+data:
+  Address: secure.dc1.syslog.project-flotta.io:601
+  Protocol: tcp
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: s3config
+  namespace: default
+data:
+  BUCKET_HOST: s3.us-east-1.amazonaws.com
+  BUCKET_NAME: "flotta-data-bucket"
+  BUCKET_PORT: "443"
+  BUCKET_REGION: us-east-1
